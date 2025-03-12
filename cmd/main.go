@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	cfg := utils.Must(configs.LoadConfig("./configs/config.json"))
+	cfg := utils.Must(configs.LoadConfig(configs.ConfigFilePath))
 	r := api.InitRouter()
 	if err := r.Run(fmt.Sprintf(":%s", cfg.Server.Port)); err != nil {
 		log.Fatalf("Failed to start server: %v", err)

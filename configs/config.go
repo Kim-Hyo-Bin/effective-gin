@@ -7,25 +7,32 @@ import (
 	"os"
 )
 
+const ConfigFilePath = "./configs/config.json"
+
 type Config struct {
 	Server struct {
 		Port string `yaml:"port"`
 		Host string `yaml:"host"`
 	} `yaml:"server"`
-	App struct {
+	GinConfig struct {
 		Environment string `yaml:"environment"`
 		LogLevel    string `yaml:"log_level"`
-	} `yaml:"app"`
+		LogPath     string `yaml:"log_path"`
+	} `yaml:"gin_config"`
+	Database struct {
+		Dialect  string `yaml:"dialect"`
+		Host     string `yaml:"host"`
+		Port     string `yaml:"port"`
+		User     string `yaml:"user"`
+		Password string `yaml:"password"`
+		Name     string `yaml:"name"`
+	} `yaml:"database"`
 }
 
-func LoadConfig(configPath string) (Config, error) {
+func LoadConfig(configPath string) (config *Config, err error) {
 	jsonFile := utils.Must(os.ReadFile(configPath))
-
-	var config Config
-
 	if err := json.Unmarshal(jsonFile, &config); err != nil {
 		return config, fmt.Errorf("JSON 파싱 오류: %w", err)
 	}
-
-	return config, nil
+	return
 }
