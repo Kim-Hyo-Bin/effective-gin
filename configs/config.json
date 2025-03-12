@@ -1,0 +1,10 @@
+{
+  "server": {
+    "port": "8081",
+    "host": "localhost"
+  },
+  "app": {
+    "environment": "development",
+    "log_level": "debug"
+  }
+}
