@@ -1,0 +1,33 @@
+feat: under 50 characters
+
+Body (Optional, if detailed description needed)
+
+- List of changes (Bulleted list, Optional)
+  - Change 1
+  - Change 2
+  ...
+
+Footer (Optional, e.g., Related issues, Breaking Changes, etc.)
+
+# ------------------ Commit Guide ------------------
+# Title (1 line): Type(<Scope>): <Summary of feature>
+#   - Type: feat, fix, docs, style, refactor, test, chore
+#   - Scope: (Optional, e.g., user, auth)
+#
+# Body (Optional, Multi-line possible)
+#   - Describe why you made the change, what you changed
+#
+# Footer (Optional)
+#   - Breaking Changes, Related issues, etc.
+# --------------------------------------------------
+# ------------------   example    ------------------
+#[commit 32198c550d2b041b63b3b4d961481bb3abe65f10]
+#feat: Implement core components (logger, errors, ORM, configs)
+#
+#- Integrate logger with Gin (adjust ginLogger).
+#- Implement custom errors package (internal/errors, not yet used).
+#- Add database ORM (GORM) setup (no tests yet).
+#- Configure configs package (database info, config structs).
+#
+#Caution: Direct push to main enabled for initial setup. Re-enable PR requirement later.
+# --------------------------------------------------
