@@ -33,7 +33,7 @@ func New(baseErr string) error {
 }
 
 func Wrap(baseErr string, message string) error {
-	return fmt.Errorf("%s: %w", message, errors.New(baseErr))
+	return fmt.Errorf("%s: %w", message, New(baseErr))
 }
 
 func WithMessage(err error, message string) error {

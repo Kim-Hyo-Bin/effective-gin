@@ -4,14 +4,7 @@ APP_NAME = effective-gin
 VERSION ?= $(shell git describe --tags --abbrev=0 2> /dev/null || echo "unknown")
 
 swag:
-		swag init --generalInfo ./cmd/main.go --output ./docs
-
-build: golangci-lint swag
-		go build -ldflags "-X 'effective-gin/internal/handlers.Version=${VERSION}'\
-		-X 'effective-gin/internal/handlers.BuildCommit=$(shell git rev-parse --short HEAD)'\
-		-X 'effective-gin/internal/handlers.BuildDate=$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')'" \
-		-o ${APP_NAME} cmd/main.go
-		echo "Build completed. Executable: ${APP_NAME}"
+		swag init --output ./docs --dir ./cmd
 
 golangci-lint:
 		golangci-lint run ./...
@@ -22,12 +15,12 @@ fmt:
 test:
 		go test -v ./...
 
-check: golangci-lint fmt test
-		echo "Check completed."
-
-run: build
-		echo "Running ${APP_NAME}..."
-		GIN_MODE=debug ./${APP_NAME}
+build: swag golangci-lint fmt test
+		go build -ldflags "-X 'effective-gin/internal/handlers.Version=${VERSION}'\
+		-X 'effective-gin/internal/handlers.BuildCommit=$(shell git rev-parse --short HEAD)'\
+		-X 'effective-gin/internal/handlers.BuildDate=$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')'" \
+		-o ${APP_NAME} cmd/main.go
+		echo "Build completed. Executable: ${APP_NAME}"
 
 clean:
 		echo "Cleaning build artifacts..."
@@ -36,4 +29,11 @@ clean:
 		rm -rf ./docs
 		echo "Clean completed."
 
-.PHONY: swag golangci-lint fmt test check build run clean
+check: build clean
+		echo "Check completed."
+
+run: build
+		echo "Running ${APP_NAME}..."
+		GIN_MODE=debug ./${APP_NAME}
+
+.PHONY: swag golangci-lint fmt test build clean check run

@@ -5,6 +5,8 @@ import (
 	"effective-gin/internal/handlers"
 	"effective-gin/utils"
 	"effective-gin/utils/logger"
+	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -22,15 +24,42 @@ func InitRouter() *gin.Engine {
 	_ = r.SetTrustedProxies([]string{"127.0.0.1"})
 	r.Use(GinLogger())
 	r.Use(gin.Recovery())
+	r.Use(redirectAllToV2)
 
-	rootGroup := r.Group("/")
-	rootGroup.GET("", handlers.VersionHandler)
-	rootGroup.GET("version", handlers.VersionHandler)
-	rootGroup.GET("health", handlers.HealthHandler)
-	rootGroup.GET("info", handlers.InfoHandler)
-	rootGroup.GET("ping", handlers.PingHandler)
+	rootGroup := r.Group("")
+	InitV1Routes(rootGroup)
+	InitV2Routes(rootGroup)
 
 	return r
+}
+
+func InitV1Routes(RouterGroup *gin.RouterGroup) {
+	v1Group := RouterGroup.Group("/v1")
+	v1Group.GET("", handlers.VersionHandler)
+	v1Group.GET("version", handlers.VersionHandler)
+	v1Group.GET("health", handlers.HealthHandler)
+	v1Group.GET("info", handlers.InfoHandler)
+	v1Group.GET("ping", handlers.PingHandler)
+}
+
+func InitV2Routes(RouterGroup *gin.RouterGroup) {
+	v1Group := RouterGroup.Group("/v2")
+	v1Group.GET("", handlers.VersionHandler)
+	v1Group.GET("version", handlers.VersionHandler)
+	v1Group.GET("health", handlers.HealthHandler)
+	v1Group.GET("info", handlers.InfoHandler)
+	v1Group.GET("ping", handlers.PingHandler)
+}
+
+func redirectAllToV2(c *gin.Context) {
+	if c.Request.URL.Path != "/v2" &&
+		!strings.HasPrefix(c.Request.URL.Path, "/v2/") &&
+		!strings.HasPrefix(c.Request.URL.Path, "/v1/") &&
+		c.Request.URL.Path != "/v1" {
+		c.Redirect(http.StatusMovedPermanently, "/v2"+c.Request.URL.Path)
+		c.Abort()
+	}
+	c.Next()
 }
 
 func GinLogger() gin.HandlerFunc {
