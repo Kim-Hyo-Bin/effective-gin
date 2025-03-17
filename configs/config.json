@@ -1,12 +1,13 @@
 {
   "server": {
     "port": "8080",
-    "host": "localhost"
+    "host": "localhost",
+    "logPath": "./tmp/logs/server.log"
   },
-  "gin_config": {
+  "ginConfig": {
     "environment": "development",
-    "log_level": "debug",
-    "log_path": "./effective-gin.log"
+    "logLevel": "debug",
+    "logPath": "./tmp/logs/effective-gin.log"
   },
   "database": {
     "dialect": "mysql",

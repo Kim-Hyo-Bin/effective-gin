@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/sirupsen/logrus"
 )
@@ -28,6 +29,13 @@ func NewLogger(logPath string) *logrus.Logger {
 		// SortingFunc:             nil,
 		// DisableTimestamp:        false,
 	})
+	dir := filepath.Dir(logPath)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err := os.MkdirAll(dir, 0755)
+		if err != nil {
+			fmt.Println("Failed to create log directory:", err)
+		}
+	}
 
 	logFile, err := os.OpenFile(logPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {

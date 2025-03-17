@@ -11,14 +11,15 @@ const ConfigFilePath = "./configs/config.json"
 
 type Config struct {
 	Server struct {
-		Port string `yaml:"port"`
-		Host string `yaml:"host"`
+		Port    string `yaml:"port"`
+		Host    string `yaml:"host"`
+		LogPath string `yaml:"logPath"`
 	} `yaml:"server"`
 	GinConfig struct {
 		Environment string `yaml:"environment"`
-		LogLevel    string `yaml:"log_level"`
-		LogPath     string `yaml:"log_path"`
-	} `yaml:"gin_config"`
+		LogLevel    string `yaml:"logLevel"`
+		LogPath     string `yaml:"logPath"`
+	} `yaml:"ginConfig"`
 	Database struct {
 		Dialect  string `yaml:"dialect"`
 		Host     string `yaml:"host"`
