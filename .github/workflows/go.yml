@@ -30,7 +30,9 @@ jobs:
       uses: golangci/golangci-lint-action@v3
       with:
         version: latest
-
+        # skip-pkg-cache: true - known issue: https://github.com/golangci/golangci-lint-action/issues/244
+        skip-pkg-cache: true
+        
     - name: Build
       run: go build -v ./...
 

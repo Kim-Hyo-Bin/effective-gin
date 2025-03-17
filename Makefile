@@ -1,7 +1,7 @@
 # Makefile for Effective Gin Project
 
 APP_NAME = effective-gin
-VERSION ?= 0.0.1
+VERSION ?= $(shell git describe --tags --abbrev=0 2> /dev/null || echo "unknown")
 
 swag:
 		swag init --generalInfo ./cmd/main.go --output ./docs
