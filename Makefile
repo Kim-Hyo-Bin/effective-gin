@@ -4,7 +4,7 @@ APP_NAME = effective-gin
 VERSION ?= $(shell git describe --tags --abbrev=0 2> /dev/null || echo "unknown")
 
 swag:
-		swag init --output ./docs --dir ./cmd
+		swag init --output ./docs --dir ./cmd,./internal/handlers
 
 golangci-lint:
 		golangci-lint run ./...

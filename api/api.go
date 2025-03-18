@@ -43,19 +43,18 @@ func InitV1Routes(RouterGroup *gin.RouterGroup) {
 }
 
 func InitV2Routes(RouterGroup *gin.RouterGroup) {
-	v1Group := RouterGroup.Group("/v2")
-	v1Group.GET("", handlers.VersionHandler)
-	v1Group.GET("version", handlers.VersionHandler)
-	v1Group.GET("health", handlers.HealthHandler)
-	v1Group.GET("info", handlers.InfoHandler)
-	v1Group.GET("ping", handlers.PingHandler)
+	v2Group := RouterGroup.Group("/v2")
+	v2Group.GET("", handlers.VersionHandler)
+	v2Group.GET("version", handlers.VersionHandler)
+	v2Group.GET("health", handlers.HealthHandler)
+	v2Group.GET("info", handlers.InfoHandler)
+	v2Group.GET("ping", handlers.PingHandler)
 }
 
 func redirectAllToV2(c *gin.Context) {
-	if c.Request.URL.Path != "/v2" &&
-		!strings.HasPrefix(c.Request.URL.Path, "/v2/") &&
-		!strings.HasPrefix(c.Request.URL.Path, "/v1/") &&
-		c.Request.URL.Path != "/v1" {
+	if c.Request.URL.Path != "/v1" && !strings.HasPrefix(c.Request.URL.Path, "/v1/") &&
+		c.Request.URL.Path != "/v2" && !strings.HasPrefix(c.Request.URL.Path, "/v2/") &&
+		c.Request.URL.Path != "/swagger" && !strings.HasPrefix(c.Request.URL.Path, "/swagger/") {
 		c.Redirect(http.StatusMovedPermanently, "/v2"+c.Request.URL.Path)
 		c.Abort()
 	}
