@@ -103,7 +103,6 @@ $RECYCLE.BIN/
 
 # folder
 .vscode/
-docs/
 tmp/
 *.log
 
