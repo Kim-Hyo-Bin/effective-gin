@@ -19,40 +19,33 @@
 
 * **`make swag`**:
     * Swagger 문서를 생성합니다.
+    * config값에 따라 swagger ui의 작동유무가 선택되며, swag의 변경점이 발생할 경우 사용합니다.
     * 실행하면 `./docs` 디렉토리에 API 문서가 생성됩니다.
-    * 사용법: `make swag`
 
-* **`make golangci-lint`**:
+* **`make lint`**:
     * Go 코드에 대해 린팅을 실행하여 잠재적인 오류나 스타일 문제를 검사합니다.
-    * 사용법: `make golangci-lint`
 
 * **`make fmt`**:
     * Go 코드의 형식을 표준 Go 형식으로 맞춥니다.
-    * 사용법: `make fmt`
 
 * **`make test`**:
     * 프로젝트의 Go 테스트 코드를 실행합니다.
-    * `-v` 플래그는 자세한 테스트 출력을 보여줍니다.
-    * 사용법: `make test`
+    * swag의 docs파일이 존재하지 않을 경우 에러가 발생합니다.
+    * 원할한 개발을 위해 `make swag`를 통해 docs파일이 생성 시킨 후 테스트를 진행합니다.
 
 * **`make build`**:
     * 프로젝트를 빌드하여 실행 가능한 파일을 생성합니다.
     * 순서대로 `swag`, `golangci-lint`, `fmt`, `test`를 실행한 후 빌드를 진행합니다.
     * `-ldflags`를 사용하여 빌드 시 버전 정보, 커밋 해시, 빌드 날짜를 실행 파일에 포함시킵니다.
     * 생성된 실행 파일은 `${APP_NAME}` (기본적으로 `effective-gin`)으로 명명됩니다.
-    * 사용법: `make build`
 
 * **`make clean`**:
     * 빌드 결과물과 생성된 문서를 삭제하여 프로젝트를 정리합니다.
-    * 실행 파일, `./docs` 디렉토리를 제거하고 `go clean` 명령어를 실행합니다.
-    * 사용법: `make clean`
+    * 실행 파일 과 swag와 관련된 `./docs` 디렉토리를 제거하고 `go clean` 명령어를 실행합니다.
 
 * **`make check`**:
     * 프로젝트를 빌드한 다음 정리합니다. 주로 빌드가 성공적으로 완료되는지 확인하는 데 사용될 수 있습니다.
     * `build`와 `clean`을 순서대로 실행합니다.
-    * 사용법: `make check`
 
 * **`make run`**:
     * 프로젝트를 빌드하고 실행합니다.
-    * 먼저 `build`를 실행하여 실행 파일을 생성한 후, `GIN_MODE=debug` 환경 변수를 설정하여 디버그 모드로 애플리케이션을 실행합니다.
-    * 사용법: `make run`
