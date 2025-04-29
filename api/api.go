@@ -1,8 +1,8 @@
 package api
 
 import (
+	"effective-gin/api/handlers"
 	"effective-gin/configs"
-	"effective-gin/internal/handlers"
 	"effective-gin/utils"
 	"effective-gin/utils/logger"
 	"net/http"
@@ -49,6 +49,8 @@ func InitV2Routes(RouterGroup *gin.RouterGroup) {
 	v2Group.GET("health", handlers.HealthHandler)
 	v2Group.GET("info", handlers.InfoHandler)
 	v2Group.GET("ping", handlers.PingHandler)
+	v2Group.GET("example1", handlers.TestShapeCalculations1)
+	v2Group.GET("example2", handlers.TestShapeCalculations2)
 }
 
 func redirectAllToV2(c *gin.Context) {
