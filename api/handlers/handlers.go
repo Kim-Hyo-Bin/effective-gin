@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"effective-gin/internal/example"
 	"fmt"
 	"net/http"
 	"os"
@@ -129,5 +130,21 @@ func InfoHandler(c *gin.Context) {
 func PingHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, PingResponse{
 		Message: "pong",
+	})
+}
+
+func TestShapeCalculations1(c *gin.Context) {
+	// Example of using the shape interface
+	s1 := example.Rectangle{Length: 5, Width: 3}
+	c.JSON(http.StatusOK, gin.H{
+		"rectangle_area":      s1.Area(),
+		"rectangle_perimeter": s1.Perimeter(),
+	})
+}
+func TestShapeCalculations2(c *gin.Context) {
+	s2 := example.Circle{Radius: 2}
+	c.JSON(http.StatusOK, gin.H{
+		"circle_area":      s2.Area(),
+		"circle_perimeter": s2.Perimeter(),
 	})
 }

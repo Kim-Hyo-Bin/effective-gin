@@ -11,7 +11,9 @@ import (
 
 type Fields = logrus.Fields
 
-func NewLogger(logPath string) *logrus.Logger {
+type Logger = logrus.Logger
+
+func NewLogger(logPath string) *Logger {
 	logger := logrus.New()
 
 	logger.SetFormatter(&logrus.TextFormatter{
