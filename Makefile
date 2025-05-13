@@ -17,9 +17,9 @@ test:
 		go tool cover -html=coverage.out -o coverage.html
 
 build: swag golangci-lint fmt test
-		go build -ldflags "-X '${APP_NAME}/internal/handlers.Version=${VERSION}'\
-		-X 'effective-gin/internal/handlers.BuildCommit=$(shell git rev-parse --short HEAD)'\
-		-X 'effective-gin/internal/handlers.BuildDate=$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')'" \
+		go build -ldflags "-X '${APP_NAME}/api/handlers.Version=${VERSION}'\
+		-X 'effective-gin/api/handlers.BuildCommit=$(shell git rev-parse --short HEAD)'\
+		-X 'effective-gin/api/handlers.BuildDate=$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')'" \
 		-o ${APP_NAME} cmd/server/main.go
 		echo "Build completed. Executable: ${APP_NAME}"
 

@@ -102,7 +102,9 @@ $RECYCLE.BIN/
 
 
 # folder
+.github/
 .vscode/
+.idx/
 tmp/
 *.log
 
